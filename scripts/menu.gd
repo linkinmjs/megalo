@@ -2,7 +2,7 @@ extends Control
 
 
 func _on_play_button_pressed() -> void:
-	GameManager.remove_menu()
+	queue_free()
 	GameManager.change_level(0)
 
 

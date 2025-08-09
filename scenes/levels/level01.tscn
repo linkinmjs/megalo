@@ -45,8 +45,10 @@ animations = [{
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource("1_chssp")
+level_id = 1
 
 [node name="ParallaxLayer1" type="ParallaxLayer" parent="."]
+visible = false
 motion_scale = Vector2(0.05, 0.05)
 motion_mirroring = Vector2(1920, 0)
 
