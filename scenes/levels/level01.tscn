@@ -1,48 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://coymslk6q6f82"]
+[gd_scene load_steps=7 format=3 uid="uid://coymslk6q6f82"]
 
 [ext_resource type="Script" uid="uid://d1mtfxthc3f21" path="res://scripts/background.gd" id="1_chssp"]
 [ext_resource type="Texture2D" uid="uid://c50ajnafitr7y" path="res://assets/backgrounds/Clouds 2/1.png" id="2_chssp"]
 [ext_resource type="Texture2D" uid="uid://wjdsgvrieau2" path="res://assets/backgrounds/Clouds 1/2.png" id="3_if0f4"]
 [ext_resource type="Texture2D" uid="uid://ba0wb2sl0bpk8" path="res://assets/backgrounds/Clouds 2/2.png" id="4_3yqkj"]
 [ext_resource type="Texture2D" uid="uid://ci1uccroq1tho" path="res://assets/backgrounds/Clouds 2/3.png" id="5_if0f4"]
-[ext_resource type="Texture2D" uid="uid://r8g81rmj56n0" path="res://assets/sprites/player/walk.png" id="6_y32f7"]
 [ext_resource type="Texture2D" uid="uid://bdnth7x7vviov" path="res://assets/backgrounds/Clouds 2/4.png" id="6_ylsda"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
-atlas = ExtResource("6_y32f7")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
-atlas = ExtResource("6_y32f7")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_85g3d"]
-atlas = ExtResource("6_y32f7")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
-atlas = ExtResource("6_y32f7")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ya4ey"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o6xl0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tipki")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_85g3d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_choun")
-}],
-"loop": true,
-"name": &"default",
-"speed": 12.0
-}]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource("1_chssp")
@@ -98,13 +61,3 @@ motion_mirroring = Vector2(1920, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer6"]
 scale = Vector2(3.4, 3.4)
 centered = false
-
-[node name="PlayerLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0, 0)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerLayer"]
-position = Vector2(959, 600)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_ya4ey")
-autoplay = "default"
-frame_progress = 0.63425
