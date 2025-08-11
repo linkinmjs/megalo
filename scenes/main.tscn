@@ -8,10 +8,10 @@
 [node name="Main" type="Node2D" groups=["main"]]
 script = ExtResource("1_tefeu")
 
-[node name="ManuBackground" parent="." instance=ExtResource("1_0wfyh")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("5_tbgi4")
 
 [node name="Menu" parent="Camera2D" instance=ExtResource("3_sugp2")]
+
+[node name="ManuBackground" parent="Camera2D/Menu" instance=ExtResource("1_0wfyh")]
