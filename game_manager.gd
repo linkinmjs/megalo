@@ -2,7 +2,13 @@ extends Node
 
 @export var level_paths: PackedStringArray = [
 	"res://scenes/levels/level00.tscn",
-	"res://scenes/levels/level01.tscn"
+	"res://scenes/levels/level01.tscn",
+	"res://scenes/levels/level02.tscn",
+	"res://scenes/levels/level03.tscn",
+	"res://scenes/levels/level04.tscn",
+	"res://scenes/levels/level05.tscn",
+	"res://scenes/levels/level06.tscn",
+	"res://scenes/levels/level07.tscn",
 ]
 @export var player_scene: PackedScene = preload("res://scenes/player/player.tscn")
 @export var song_stream: AudioStream = preload("res://assets/sounds/background/Megalo.mp3")
