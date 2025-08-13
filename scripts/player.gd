@@ -8,7 +8,7 @@ var debug_visible := false
 # --- HORIZONTAL ---
 @export var accel_x: float = 400.0       # aceleración lateral
 @export var deaccel_x: float = 320.0     # desaceleración lateral
-@export var max_speed_x: float = 220.0   # tope de velocidad lateral
+@export var max_speed_x: float = 320.0   # tope de velocidad lateral
 
 # --- VERTICAL ---
 @export var gravity: float = 520.0               # atracción hacia abajo
