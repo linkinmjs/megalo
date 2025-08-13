@@ -5,7 +5,7 @@ var state: PlayerState = PlayerState.DESCENDING
 
 @export var gravity: float = 900.0        # qué tan rápido cae
 @export var thrust: float = 1400.0        # empuje hacia arriba al mantener fly
-@export var max_up_speed: float = -450.0  # velocidad vertical máxima hacia arriba (negativa)
+@export var max_up_speed: float = -520.0  # velocidad vertical máxima hacia arriba (negativa)
 @export var max_down_speed: float = 650.0 # velocidad vertical máxima hacia abajo
 
 @export var horizontal_speed: float = 120.0     # opcional: A/D o ←/→
@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	var fly := Input.is_action_pressed("fly")
 	var dir_x := 0.0
 	if allow_horizontal:
-		dir_x = Input.get_axis("ui_left", "ui_right")
+		dir_x = Input.get_axis("left", "right")
 
 	# --- FSM súper simple ---
 	if fly:
