@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0vd6g1pu3e61"]
+
+[ext_resource type="Texture2D" uid="uid://dfp77nuxbowb1" path="res://assets/Sprite-0003.png" id="1_wweuh"]
+
+[sub_resource type="Curve" id="Curve_pvynh"]
+_data = [Vector2(0, 0.204819), 0.0, 0.0, 0, 0, Vector2(0.495495, 0.662651), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vjkop"]
+curve = SubResource("Curve_pvynh")
+
+[sub_resource type="Curve" id="Curve_sp8ps"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.986486, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_8v373"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.256757, 0.421687), 0.0, 0.0, 0, 0, Vector2(0.522523, -0.542169), 0.0, 0.0, 0, 0, Vector2(0.765766, 0.614458), 0.121577, 0.121577, 0, 0, Vector2(1, -0.0120481), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_pvynh"]
+curve_x = SubResource("Curve_sp8ps")
+curve_y = SubResource("Curve_8v373")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pvynh"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(495, 100, 0)
+emission_shape = 3
+emission_box_extents = Vector3(0, 520, 1)
+spread = 0.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+directional_velocity_min = 20.0
+directional_velocity_max = 200.0
+directional_velocity_curve = SubResource("CurveXYZTexture_pvynh")
+gravity = Vector3(-400, 0, 0)
+alpha_curve = SubResource("CurveTexture_vjkop")
+
+[node name="WindParticles" type="GPUParticles2D" groups=["wind"]]
+position = Vector2(1920, 510)
+amount = 10
+texture = ExtResource("1_wweuh")
+lifetime = 5.0
+trail_enabled = true
+trail_lifetime = 0.5
+trail_sections = 96
+trail_section_subdivisions = 96
+process_material = SubResource("ParticleProcessMaterial_pvynh")

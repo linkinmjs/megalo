@@ -12,6 +12,7 @@ extends Node
 ]
 @export var player_scene: PackedScene = preload("res://scenes/player/player.tscn")
 @export var song_stream: AudioStream = preload("res://assets/sounds/background/Megalo.mp3")
+@export var wind_scene: PackedScene = preload("res://scenes/effects/wind_particles.tscn")
 
 var music: AudioStreamPlayer
 var levels: Array[PackedScene] = []
@@ -22,6 +23,9 @@ var is_changing := false
 var fade_rect: ColorRect
 var actor_layer: CanvasLayer           # capa donde va el Player
 var player: Node2D                     # referencia al Player
+
+var effects_layer: CanvasLayer         # capa donde va el Viento
+var wind: GPUParticles2D               # referencia al Viento
 
 func _ready() -> void:
 	# Cargar escenas
@@ -36,12 +40,16 @@ func _ready() -> void:
 	# Capas auxiliares
 	_ensure_fade()
 	_ensure_actor_layer()
+	
+	_ensure_effects_layer()
+	_spawn_wind_once()
 
 	# Instanciar primer nivel (solo background)
 	_spawn_level(0)
 
 # Llamado por el botón Play del menú
 func start_game() -> void:
+	
 	if player: return
 	_spawn_player_intro()
 	_ensure_music()
@@ -116,8 +124,22 @@ func _spawn_level(index: int) -> void:
 	add_child(lvl)
 	current_level = lvl
 	current_index = index
-	# Mantener actor_layer al tope
-	move_child(actor_layer, get_child_count()-1)
+	# Re-ordenar para que EffectsLayer quede entre BG y Actor
+	move_child(effects_layer, get_child_count() - 1)
+	move_child(actor_layer, get_child_count() - 1)
+
+func _spawn_wind_once() -> void:
+	if wind: return
+	if not wind_scene:
+		push_warning("No hay wind_scene asignada.")
+		return
+	wind = wind_scene.instantiate() as GPUParticles2D
+	
+	var in_group := get_tree().get_nodes_in_group("wind")
+	for n in in_group:
+		if n is GPUParticles2D:
+			return
+	effects_layer.add_child(wind)             # ¡no lo apagues al cambiar nivel!
 
 func _ensure_fade() -> void:
 	if has_node("FadeLayer/Fade"):
@@ -155,6 +177,19 @@ func _ensure_actor_layer() -> void:
 	actor_layer.name = "ActorLayer"
 	actor_layer.layer = 10  # por encima de backgrounds (que suelen estar en 0)
 	add_child(actor_layer)
+
+func _ensure_effects_layer() -> void:
+	var root := get_tree().root
+	var existing := root.get_node_or_null("EffectsLayer")
+	print(existing)
+	if existing:
+		effects_layer = existing as CanvasLayer
+		return
+	effects_layer = CanvasLayer.new()
+	effects_layer.name = "EffectsLayer"
+	effects_layer.layer = 5  # BG(0) < Effects(5) < Actor(10) < Fade(100)
+	add_child(effects_layer) # o root.add_child(effects_layer) si preferís
+
 
 func _ensure_music() -> void:
 	if music: return
