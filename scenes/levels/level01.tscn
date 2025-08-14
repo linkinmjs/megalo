@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://coymslk6q6f82"]
+[gd_scene load_steps=14 format=3 uid="uid://coymslk6q6f82"]
 
 [ext_resource type="Script" uid="uid://d1mtfxthc3f21" path="res://scripts/background.gd" id="1_chssp"]
 [ext_resource type="Texture2D" uid="uid://c50ajnafitr7y" path="res://assets/backgrounds/Clouds 2/1.png" id="2_chssp"]
@@ -6,6 +6,40 @@
 [ext_resource type="Texture2D" uid="uid://ba0wb2sl0bpk8" path="res://assets/backgrounds/Clouds 2/2.png" id="4_3yqkj"]
 [ext_resource type="Texture2D" uid="uid://ci1uccroq1tho" path="res://assets/backgrounds/Clouds 2/3.png" id="5_if0f4"]
 [ext_resource type="Texture2D" uid="uid://bdnth7x7vviov" path="res://assets/backgrounds/Clouds 2/4.png" id="6_ylsda"]
+[ext_resource type="Texture2D" uid="uid://dfp77nuxbowb1" path="res://assets/Sprite-0003.png" id="7_3yqkj"]
+
+[sub_resource type="Curve" id="Curve_if0f4"]
+_data = [Vector2(0, 0.204819), 0.0, 0.0, 0, 0, Vector2(0.495495, 0.662651), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_edshh"]
+curve = SubResource("Curve_if0f4")
+
+[sub_resource type="Curve" id="Curve_ylsda"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.986486, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qjm5h"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.256757, 0.421687), 0.0, 0.0, 0, 0, Vector2(0.522523, -0.542169), 0.0, 0.0, 0, 0, Vector2(0.765766, 0.614458), 0.121577, 0.121577, 0, 0, Vector2(1, -0.0120481), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ncghl"]
+curve_x = SubResource("Curve_ylsda")
+curve_y = SubResource("Curve_qjm5h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y32f7"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0, 540, 1)
+spread = 0.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+directional_velocity_min = 20.0
+directional_velocity_max = 50.0
+directional_velocity_curve = SubResource("CurveXYZTexture_ncghl")
+gravity = Vector3(-300, 0, 0)
+alpha_curve = SubResource("CurveTexture_edshh")
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource("1_chssp")
@@ -61,3 +95,14 @@ motion_mirroring = Vector2(1920, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer6"]
 scale = Vector2(3.333, 3.333)
 centered = false
+
+[node name="WindParticles" type="GPUParticles2D" parent="."]
+position = Vector2(1919, 510)
+amount = 10
+texture = ExtResource("7_3yqkj")
+lifetime = 5.0
+trail_enabled = true
+trail_lifetime = 0.5
+trail_sections = 96
+trail_section_subdivisions = 96
+process_material = SubResource("ParticleProcessMaterial_y32f7")

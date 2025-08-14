@@ -11,34 +11,34 @@
 _data = [Vector2(0, 0.204819), 0.0, 0.0, 0, 0, Vector2(0.495495, 0.662651), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_edshh"]
+[sub_resource type="CurveTexture" id="CurveTexture_vjkop"]
 curve = SubResource("Curve_pvynh")
 
 [sub_resource type="Curve" id="Curve_sp8ps"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.986486, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_8v373"]
 _limits = [-1.0, 1.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.256757, 0.542169), 0.0, 0.0, 0, 0, Vector2(0.522523, -0.542169), 0.0, 0.0, 0, 0, Vector2(0.765766, 0.614458), 0.121577, 0.121577, 0, 0, Vector2(1, -0.0120481), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.256757, 0.421687), 0.0, 0.0, 0, 0, Vector2(0.522523, -0.542169), 0.0, 0.0, 0, 0, Vector2(0.765766, 0.614458), 0.121577, 0.121577, 0, 0, Vector2(1, -0.0120481), 0.0, 0.0, 0, 0]
 point_count = 5
 
-[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ncghl"]
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_pvynh"]
 curve_x = SubResource("Curve_sp8ps")
 curve_y = SubResource("Curve_8v373")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pvynh"]
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(960, 540, 1)
+emission_box_extents = Vector3(0, 540, 1)
 spread = 0.0
-initial_velocity_min = 30.0
+initial_velocity_min = 50.0
 initial_velocity_max = 50.0
 directional_velocity_min = 20.0
 directional_velocity_max = 50.0
-directional_velocity_curve = SubResource("CurveXYZTexture_ncghl")
-gravity = Vector3(0, 0, 0)
-alpha_curve = SubResource("CurveTexture_edshh")
+directional_velocity_curve = SubResource("CurveXYZTexture_pvynh")
+gravity = Vector3(-300, 0, 0)
+alpha_curve = SubResource("CurveTexture_vjkop")
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource("1_vjkop")
@@ -93,9 +93,9 @@ motion_mirroring = Vector2(1920, 0)
 scale = Vector2(3.333, 3.333)
 centered = false
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(990, 510)
-amount = 50
+[node name="WindParticles" type="GPUParticles2D" parent="."]
+position = Vector2(1919, 510)
+amount = 10
 texture = ExtResource("6_vjkop")
 lifetime = 5.0
 trail_enabled = true
