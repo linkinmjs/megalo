@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=3 uid="uid://chxf1klkgtdrg"]
+
+[ext_resource type="Script" uid="uid://btukdwwtd8pkh" path="res://scripts/menu.gd" id="1_u81ku"]
+[ext_resource type="Texture2D" uid="uid://r8g81rmj56n0" path="res://assets/sprites/player/walk.png" id="2_2tfbb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
+atlas = ExtResource("2_2tfbb")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+atlas = ExtResource("2_2tfbb")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("2_2tfbb")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
+atlas = ExtResource("2_2tfbb")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_85g3d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbgi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tefeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tipki")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 8.0
+}]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u81ku")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="BarrelSlot" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="BarrelHero" type="Node2D" parent="HBoxContainer/BarrelSlot"]
+unique_name_in_owner = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HBoxContainer/BarrelSlot/BarrelHero"]
+scale = Vector2(25, 25)
+sprite_frames = SubResource("SpriteFrames_85g3d")
+animation = &"flying"
+autoplay = "flying"
+frame_progress = 0.201625
+offset = Vector2(15, 0)
+
+[node name="MenuSlot" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="MenuCard" type="PanelContainer" parent="HBoxContainer/MenuSlot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MenuSlot/MenuCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "MÉGALO"
+
+[node name="PlayButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reproducir"
+
+[node name="OptionsButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Opciones"
+
+[node name="ExitButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Salir
+"
+
+[connection signal="pressed" from="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
