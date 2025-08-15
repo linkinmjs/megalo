@@ -30,10 +30,10 @@ emission_box_extents = Vector3(0, 520, 1)
 spread = 0.0
 initial_velocity_min = 50.0
 initial_velocity_max = 50.0
-directional_velocity_min = 20.0
+directional_velocity_min = 150.0
 directional_velocity_max = 200.0
 directional_velocity_curve = SubResource("CurveXYZTexture_pvynh")
-gravity = Vector3(-400, 0, 0)
+gravity = Vector3(-600, 0, 0)
 alpha_curve = SubResource("CurveTexture_vjkop")
 
 [node name="WindParticles" type="GPUParticles2D" groups=["wind"]]

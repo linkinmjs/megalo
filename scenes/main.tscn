@@ -1,9 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvqrf72qx6ijh"]
+[gd_scene load_steps=8 format=3 uid="uid://dvqrf72qx6ijh"]
 
 [ext_resource type="Script" uid="uid://r6ulj6afjaiu" path="res://game_manager.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://jpv334aa7hq8" path="res://scenes/UI/menu.tscn" id="3_sugp2"]
-[ext_resource type="PackedScene" uid="uid://coymslk6q6f82" path="res://scenes/levels/level01.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://do5uwpnb2ftpc" path="res://scripts/camera_2d.gd" id="5_tbgi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
+size = Vector2(3064, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(54.5, 1889.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(3104.5, 63.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
+size = Vector2(101, 1908)
 
 [node name="Main" type="Node2D" groups=["main"]]
 script = ExtResource("1_tefeu")
@@ -14,4 +25,22 @@ script = ExtResource("5_tbgi4")
 
 [node name="Menu" parent="Camera2D" instance=ExtResource("3_sugp2")]
 
-[node name="ParallaxBackground" parent="Camera2D/Menu" instance=ExtResource("4_jyhfs")]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="RigidBody2D" type="StaticBody2D" parent="Node2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/RigidBody2D"]
+position = Vector2(1077, 1269)
+shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/RigidBody2D"]
+position = Vector2(-206, 458)
+shape = SubResource("RectangleShape2D_tbgi4")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Node2D/RigidBody2D"]
+position = Vector2(1122, -234)
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Node2D/RigidBody2D"]
+position = Vector2(2221, 462)
+shape = SubResource("RectangleShape2D_o6xl0")
