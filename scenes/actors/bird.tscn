@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbbxqo2prccba"]
+
+[ext_resource type="Script" uid="uid://cr78fhs3b7qh8" path="res://scripts/flyers.gd" id="1_dby45"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qtmj"]
+
+[node name="Bird" type="Node2D"]
+script = ExtResource("1_dby45")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0qtmj")

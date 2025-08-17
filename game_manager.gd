@@ -181,7 +181,6 @@ func _ensure_actor_layer() -> void:
 func _ensure_effects_layer() -> void:
 	var root := get_tree().root
 	var existing := root.get_node_or_null("EffectsLayer")
-	print(existing)
 	if existing:
 		effects_layer = existing as CanvasLayer
 		return
