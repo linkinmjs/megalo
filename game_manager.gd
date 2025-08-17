@@ -14,6 +14,11 @@ extends Node
 @export var song_stream: AudioStream = preload("res://assets/sounds/background/Megalo.mp3")
 @export var wind_scene: PackedScene = preload("res://scenes/effects/wind_particles.tscn")
 
+@export var bird_scene: PackedScene = preload("res://scenes/actors/bird.tscn")
+#@export var mini_barrel_scene: PackedScene = preload("res://scenes/actors/mini_barrel.tscn")
+@export var midlayer_index: int = 3  # dónde insertar la capa intermedia dentro del Parallax
+@export var midlayer_motion := Vector2(0.6, 0.6)  # parallax más “cercano” que el fondo
+
 var music: AudioStreamPlayer
 var levels: Array[PackedScene] = []
 var current_level: CanvasLayer
@@ -84,6 +89,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action") and not is_changing:
 		var next_index := (current_index + 1) % levels.size()
 		change_level(next_index)
+	if event.is_action_pressed("spawn_extra") and current_level:
+		_spawn_mid_actor( "bird" if (randi() & 1) == 0 else "barrel" )
 
 func change_level(next_index: int) -> void:
 	if is_changing or next_index == current_index:
@@ -198,3 +205,68 @@ func _ensure_music() -> void:
 	music.stream = song_stream
 	music.volume_db = -6.0
 	add_child(music)
+
+func _get_parallax() -> ParallaxBackground:
+	if current_level == null:
+		return null
+
+	if current_level is ParallaxBackground:
+		return current_level as ParallaxBackground
+
+	var by_name := current_level.find_child("ParallaxBackground", true, false)
+	if by_name is ParallaxBackground:
+		return by_name as ParallaxBackground
+
+	var stack: Array[Node] = [current_level]
+	while not stack.is_empty():
+		var n: Node = stack.pop_back() as Node   # <<< tipado explícito
+		if n is ParallaxBackground:
+			return n as ParallaxBackground
+		for c in n.get_children():
+			stack.append(c as Node)               # <<< tipar cada push
+	return null
+
+func _get_or_make_midlayer() -> ParallaxLayer:
+	var par := _get_parallax()
+	if par == null:
+		push_warning("No hay ParallaxBackground en el nivel actual.")
+		return null
+
+	var mid := par.get_node_or_null("MidActors") as ParallaxLayer
+	if mid:
+		return mid
+
+	mid = ParallaxLayer.new()
+	mid.name = "MidActors"
+	mid.motion_scale = Vector2(0.6, 0.6)  # entre fondo y primer plano
+	par.add_child(mid)
+	# si querés insertarla en una posición concreta:
+	# par.move_child(mid, 3)
+	return mid
+	
+func _spawn_mid_actor(kind: String) -> void:
+	var mid := _get_or_make_midlayer()
+	if not mid: return
+
+	#var scene: PackedScene = (bird_scene if kind == "bird" else mini_barrel_scene)
+	var scene: PackedScene = (bird_scene)
+	if not scene:
+		push_warning("No hay escena para %s" % kind)
+		return
+
+	var actor := scene.instantiate() as Node2D
+	mid.add_child(actor)  # cuelga del NIVEL → se destruye al cambiar con E
+
+	var rect := get_viewport().get_visible_rect()
+	var from_left := bool(randi() & 1)
+	var y := randf_range(rect.size.y * 0.25, rect.size.y * 0.8)
+	var x := (-48.0 if from_left else rect.size.x + 48.0)
+	actor.global_position = Vector2(x, y)
+
+	var dir := (1.0 if from_left else -1.0)
+	if actor.has_method("set"):
+		actor.set("dir", dir)
+	var spr := actor.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+	if spr:
+		spr.flip_h = not from_left
+		spr.play()

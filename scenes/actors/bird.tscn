@@ -1,11 +1,62 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbbxqo2prccba"]
+[gd_scene load_steps=10 format=3 uid="uid://bbbxqo2prccba"]
 
 [ext_resource type="Script" uid="uid://cr78fhs3b7qh8" path="res://scripts/flyers.gd" id="1_dby45"]
+[ext_resource type="Texture2D" uid="uid://cn3jj0tycb8bo" path="res://assets/birds/Bird01.png" id="2_0qtmj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkvcb"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxib2"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1off"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_la6il"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0at6a"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tuat"]
+atlas = ExtResource("2_0qtmj")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0qtmj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkvcb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxib2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1off")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_la6il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0at6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tuat")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="Bird" type="Node2D"]
 script = ExtResource("1_dby45")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0qtmj")
+autoplay = "default"
+frame_progress = 0.546918
