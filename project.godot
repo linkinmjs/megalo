@@ -24,6 +24,7 @@ GameManager="*res://game_manager.gd"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
+mouse_cursor/custom_image="uid://0n4ec1ft5cq3"
 
 [global_group]
 

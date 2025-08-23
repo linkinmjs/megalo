@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://chxf1klkgtdrg"]
+[gd_scene load_steps=10 format=3 uid="uid://chxf1klkgtdrg"]
 
 [ext_resource type="Script" uid="uid://btukdwwtd8pkh" path="res://scripts/menu.gd" id="1_u81ku"]
 [ext_resource type="Texture2D" uid="uid://r8g81rmj56n0" path="res://assets/sprites/player/walk.png" id="2_2tfbb"]
+[ext_resource type="FontFile" uid="uid://bdra8sxhvjkoe" path="res://assets/fonts/CyberpunkCraftpixPixel.otf" id="3_2un8v"]
+[ext_resource type="Texture2D" uid="uid://b07vho0x33mhw" path="res://assets/sprites/decor/7.png" id="4_iysyy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
 atlas = ExtResource("2_2tfbb")
@@ -102,20 +104,35 @@ alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2un8v")
+theme_override_font_sizes/font_size = 90
 text = "MÉGALO"
+
+[node name="Label2" type="Label" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "por Reunión Diurna"
 
 [node name="PlayButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "Reproducir"
 
 [node name="OptionsButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "Opciones"
 
 [node name="ExitButton" type="Button" parent="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "Salir
 "
+
+[node name="Decor" type="Sprite2D" parent="HBoxContainer/MenuSlot/MenuCard"]
+position = Vector2(440.5, 213)
+scale = Vector2(1.8125, 2.25)
+texture = ExtResource("4_iysyy")
 
 [connection signal="pressed" from="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/MenuSlot/MenuCard/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
