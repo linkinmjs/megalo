@@ -8,13 +8,19 @@ var debug_visible := false
 # --- HORIZONTAL ---
 @export var accel_x: float = 400.0       # aceleración lateral
 @export var deaccel_x: float = 320.0     # desaceleración lateral
-@export var max_speed_x: float = 320.0   # tope de velocidad lateral
+@export var max_speed_x: float = 520.0   # tope de velocidad lateral
 
 # --- VERTICAL ---
 @export var gravity: float = 520.0               # atracción hacia abajo
 @export var thrust_accel: float = 720.0          # empuje hacia arriba al mantener fly
 @export var max_up_speed: float = -420.0         # tope de subida (negativo)
 @export var max_down_speed: float = 700.0        # tope de caída
+
+# --- VIENTO (arrastre hacia la izquierda) ---
+@export var wind_base: float = -300.0       # px/s; negativo = empuja a la izquierda
+@export var wind_gust_amp: float = 60.0     # amplitud de ráfagas
+@export var wind_gust_freq: float = 0.25    # Hz, cuántas ráfagas por segundo aprox
+var _wind_t := 0.0
 
 # --- BOOST DIAGONAL (cuando se mantiene fly + izquierda/derecha) ---
 @export var boost_max: float = 1.5               # hasta 1.5x aceleración
@@ -38,6 +44,10 @@ func _ready() -> void:
 	_ensure_debug_label()
 
 func _physics_process(delta: float) -> void:
+	
+	_wind_t += delta
+	var wind_target_x := wind_base + wind_gust_amp * sin(TAU * wind_gust_freq * _wind_t)
+	
 	# INPUT
 	var fly := Input.is_action_pressed(input_fly)
 	var dir_x := 0.0
@@ -62,15 +72,18 @@ func _physics_process(delta: float) -> void:
 		# Caer acercando velocity.y al tope de caída usando gravedad
 		velocity.y = move_toward(velocity.y, max_down_speed, gravity * delta)
 
-	# HORIZONTAL (aceleración / desaceleración)
+# HORIZONTAL (aceleración / desaceleración + viento)
 	if allow_horizontal:
 		if dir_x != 0.0:
-			var target := dir_x * max_speed_x
+			# cuando hay input, el viento sesga el objetivo
+			var target := wind_target_x + dir_x * max_speed_x
 			velocity.x = move_toward(velocity.x, target, accel_x * boost * delta)
 		else:
-			velocity.x = move_toward(velocity.x, 0.0, deaccel_x * delta)
+			# sin input, relajá hacia la velocidad de viento (drift)
+			velocity.x = move_toward(velocity.x, wind_target_x, deaccel_x * delta)
 	else:
-		velocity.x = 0.0
+		# si el horizontal está desactivado, solo aplica el viento
+		velocity.x = move_toward(velocity.x, wind_target_x, deaccel_x * delta)
 
 	# LIMITE VECTORIAL (evita diagonales “cohete”)
 	if limit_diagonal_speed and velocity.length() > max_diag_speed:
